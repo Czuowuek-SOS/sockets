@@ -1,0 +1,2 @@
+g++ -c -std=c++17 ".\src\\server\\server.cpp" -o ".\\out\\server\\server.exe" -IC:\SFML-2.5.1\include -DSFML_STATIC
+g++ -c -std=c++17 ".\src\\client\\client.cpp" -o ".\\out\\client\\client.exe" -IC:\SFML-2.5.1\include -DSFML_STATIC
