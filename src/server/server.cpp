@@ -7,10 +7,11 @@
 
 #include "parts/ansi.h" 
 
-#define PORT 6090
-#define HOST "1"
-
 using std::string;
+
+#define PORT 6090
+string HOST;
+
 
 string exec(const char* cmd);
 

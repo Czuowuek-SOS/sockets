@@ -3,9 +3,12 @@
 #include <iostream>
 
 #include "parts/ansi.h"
+#include "parts/hostname.h"
+
+using std::string;
 
 #define PORT 6090
-#define HOST "1"
+sf::IpAddress HOST = ;
 
 int main()
 {
@@ -16,5 +19,14 @@ int main()
     {
         std::cout << red << "Not could connect with server\n" << reset;
     }
+
+    char sendBuffor[256];
+    while(true)
+    {
+        std::cin.getline(sendBuffor, 256);
+
+
+    }
+
     return 0;
 }
