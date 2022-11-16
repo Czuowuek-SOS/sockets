@@ -12,10 +12,6 @@ using std::string;
 #define PORT 6090
 sf::IpAddress HOST = sf::IpAddress::getLocalAddress();
 
-
-
-
-
 sf::TcpListener listener;
 sf::TcpSocket client;
 
@@ -23,7 +19,6 @@ bool acceptClient();
 string exec(const char* cmd);
 int main(int argc, const char* argv[1])
 {
-
     if(listener.listen(PORT) != sf::Socket::Done)
     {
         std::cout << red << "error: on creating listener\n" << reset; 
@@ -38,14 +33,19 @@ int main(int argc, const char* argv[1])
     {
         if(client.receive(receiveBuffor, 256, received) != sf::Socket::Done)
         {
-            std::cout << red << "error: on receiving data\n" << reset;
-        }
-        if(receiveBuffor == "_exit")
-        {
-            client.disconnect();
+            if(client.receive(receiveBuffor, 256, received) == sf::Socket::Status::Disconnected)
+            {
+                std::cout << yellow << "Client disconnected\n" << reset;
 
+                client.disconnect();
+                acceptClient();
+            }
+            else
+            {
+                std::cout << red << "error: on receiving data\n" << reset;
+            }
         }
-        
+
         string ret = exec(receiveBuffor);
 
         std::cout << ret;

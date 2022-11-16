@@ -1,4 +1,5 @@
 #include <SFML/Network.hpp>
+#include <SFML/System.hpp>
 
 #include <iostream>
 #include <string>
@@ -35,6 +36,7 @@ int main()
     {
         // std::cin.getline(sendBuffor, 256);
         // scanf("%s", &sendBuffor);
+        std::cout << ">>";
         std::getline(std::cin, sendBuffor);
         if(sendBuffor == "exit")
         {
@@ -48,14 +50,15 @@ int main()
         }
 
 
-        if(socket.receive(output, 2048, received) != sf::Socket::Done) 
+        if(socket.receive(output, 4096, received) != sf::Socket::Done) 
         {
             std::cout << red << "Error: On receiving command output\n" << reset;
         }
         printf(output);
         putchar('\n');
     }
-    socket.send("_exit", 6);
+    socket.disconnect();
+    // socket.send("_exit", 6);
 
     return 0;
 }
