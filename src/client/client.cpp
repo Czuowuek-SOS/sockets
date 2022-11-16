@@ -1,8 +1,10 @@
 #include <SFML/Network.hpp>
 
 #include <iostream>
+#include <string>
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "parts/ansi.h"
 #include "parts/hostname.h"
@@ -24,19 +26,36 @@ int main()
     }
     std::cout << green << "Connection with server\n\n" << reset;
 
-    char sendBuffor[256];
+
+    // char sendBuffor[256];
+    size_t received;
+    char output[2048];
+    string sendBuffor;
     while(true)
     {
         // std::cin.getline(sendBuffor, 256);
-        scanf("%s", &sendBuffor);
+        // scanf("%s", &sendBuffor);
+        std::getline(std::cin, sendBuffor);
+        if(sendBuffor == "exit")
+        {
+            break;
+        }
 
-        if(socket.send(sendBuffor, 256) != sf::Socket::Done)
+        if(socket.send(sendBuffor.c_str(), 256) != sf::Socket::Done)
         {
             std::cout << red << "Error: On sending data\n" << reset;
             return 1;
         }
-        
+
+
+        if(socket.receive(output, 2048, received) != sf::Socket::Done) 
+        {
+            std::cout << red << "Error: On receiving command output\n" << reset;
+        }
+        printf(output);
+        putchar('\n');
     }
+    socket.send("_exit", 6);
 
     return 0;
 }
